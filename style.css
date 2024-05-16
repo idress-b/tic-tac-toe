@@ -1,0 +1,25 @@
+
+
+
+.flex-center{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.board{
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+width:fit-content;
+}
+
+.cell{
+border: 1px solid #000;
+width: 150px;
+height:150px;
+font-size: 50px;
+}
+
+.active{
+background-color: rgb(251, 250, 250);
+}
