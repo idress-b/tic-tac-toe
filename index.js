@@ -1,6 +1,9 @@
-// variables utiles
+// éléments du DOM
 const h2 = document.querySelector('h2');
 const cells = document.querySelectorAll('.cell');
+const resetButton = document.getElementById('restart');
+
+// variables utiles
 let currentPlayer = 'X';
 const board = Array(9).fill(null);
 let gameIsOver = false;
@@ -21,7 +24,10 @@ cells.forEach(cell => {
         let winner = checkWinner();
         if (winner) {
             
-               h2.textContent = `Player ${winner.winner} wins!`;
+               h2.textContent = `le joueur ${winner.winner} a gagné!`;
+               winner.winningLine.forEach(index => {
+                     cells[index].classList.add('winner');
+                });
                gameIsOver = true;
             
         }
@@ -35,14 +41,18 @@ cells.forEach(cell => {
     });
 });
 
-const reset = () => {
+resetButton.addEventListener('click', reset);
+
+function reset(){
     cells.forEach(cell => {
         cell.textContent = '';
-        cell.classList.remove('active');
+        cell.classList.remove('active','winner');
     });
 
     currentPlayer = 'X';
+    h2.textContent = `C'est au tour de ${currentPlayer} de jouer`;
     board.fill(null);
+    gameIsOver = false;
 }
 
 function checkDraw() {

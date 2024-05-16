@@ -3,6 +3,10 @@
 body{
     flex-direction: column;
 }
+
+h2{
+    height: 30px;
+}
 .flex-center{
 display: flex;
 justify-content: center;
@@ -24,4 +28,14 @@ font-size: 50px;
 
 .active{
 background-color: rgb(251, 250, 250);
+}
+
+.winner{ 
+background-color: rgb(146, 218, 146);
+}
+
+#restart{
+margin-top: 20px;
+padding: 10px;
+font-size: 20px;
 }
