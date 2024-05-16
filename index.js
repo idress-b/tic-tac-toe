@@ -1,27 +1,35 @@
+// variables utiles
+const h2 = document.querySelector('h2');
 const cells = document.querySelectorAll('.cell');
 let currentPlayer = 'X';
 const board = Array(9).fill(null);
-
+let gameIsOver = false;
 
 cells.forEach(cell => {
     cell.addEventListener('click', () => {
-        cell.classList.toggle('active');
+        
+// on vérifie si la case est déjà remplie
+        if (cell.textContent || gameIsOver) {
+            return;
+        }
+        cell.classList.add('active');
         cell.textContent = currentPlayer;
         currentPlayer = currentPlayer === 'O' ? 'X' : 'O'
+        h2.textContent = `C'est au tour de ${currentPlayer} de jouer`;
         board[cell.dataset.index] = cell.textContent;
 
         let winner = checkWinner();
         if (winner) {
-            setTimeout(() => {
-                alert(`Player ${winner} wins!`);
-                reset();
-            }, 0);
+            
+               h2.textContent = `Player ${winner.winner} wins!`;
+               gameIsOver = true;
+            
         }
         if (checkDraw() && !winner) {
-            setTimeout(() => {
+           
                 alert('Draw!');
                 reset();
-            }, 0);
+            
         }
         console.log("winner", winner);
     });
@@ -42,7 +50,7 @@ function checkDraw() {
 }
 
 function checkWinner() {
-    const winningCombos = [
+    const winningLines = [
         [0, 1, 2],
         [3, 4, 5],
         [6, 7, 8],
@@ -53,11 +61,11 @@ function checkWinner() {
         [2, 4, 6]
     ];
 
-    for (let i = 0; i < winningCombos.length; i++) {
-        const [a, b, c] = winningCombos[i];
+    for (let i = 0; i < winningLines.length; i++) {
+        const [a, b, c] = winningLines[i];
         if (board[a] && board[a] === board[b] && board[a] === board[c]) {
             console.log('winner');
-            return board[a];
+            return { winner: board[a], winningLine: winningLines[i]};
         }
     }
 
